@@ -119,13 +119,11 @@
         .close {
             position: absolute;
             top: 10px;
-            right: 10px;
-            font-size: 1.8rem;
-            color: #333;
-            background-color: #eee;
-            padding: 0.2rem 0.5rem;
-            border-radius: 50%;
-            border: 1px solid #ccc;
+            right: 15px;
+            font-size: 1.5rem;
+            color: black;
+            background: none;
+            border: none;
             cursor: pointer;
             z-index: 10;
 
@@ -328,6 +326,7 @@
         </div>
     </div>
     
+
 <script>
     const images = {
         AC: ["ACin.jpg", "ACgf.jpg"],
@@ -362,6 +361,16 @@
         currentIndex[code] = (currentIndex[code] - 1 + images[code].length) % images[code].length;
         document.getElementById("img-" + code).src = images[code][currentIndex[code]];
     }
+
+    // ✅ Close popup when clicking outside popup-content
+    document.addEventListener('click', function(event) {
+        const popups = document.querySelectorAll('.popup');
+        popups.forEach(popup => {
+            if (event.target === popup) {
+                popup.style.display = 'none';
+            }
+        });
+    });
 </script>
 </body>
 </html>
