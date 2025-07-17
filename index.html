@@ -80,13 +80,32 @@
             padding: 2rem;
             border-radius: 12px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             text-align: center;
+            position: relative;
         }
-        .popup-content img {
+        .popup-gallery {
+            position: relative;
+        }
+        .popup-gallery img {
             max-width: 100%;
             height: auto;
             border-radius: 12px;
+        }
+        .gallery-buttons {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .gallery-buttons button {
+            padding: 0.5rem 1rem;
+            font-family: 'Kanit', sans-serif;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
         }
         .popup-content a {
             display: inline-block;
@@ -174,7 +193,13 @@
     <div id="popup-AC" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('AC')">&times;</span>
-            <img src="ACin.jpg" alt="Acerola cherry plus">
+            <div class="popup-gallery">
+                <img id="img-AC" src="ACin.jpg" alt="Acerola cherry plus">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('AC')">ก่อนหน้า</button>
+                    <button onclick="nextImage('AC')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
@@ -182,7 +207,13 @@
     <div id="popup-CA" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('CA')">&times;</span>
-            <img src="CAin.jpg" alt="Calcium L-threonate plus UC II">
+            <div class="popup-gallery">
+                <img id="img-CA" src="CAin.jpg" alt="Calcium L-threonate plus UC II">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('CA')">ก่อนหน้า</button>
+                    <button onclick="nextImage('CA')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
@@ -190,7 +221,13 @@
     <div id="popup-CL" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('CL')">&times;</span>
-            <img src="CLin.jpg" alt="Collagen">
+            <div class="popup-gallery">
+                <img id="img-CL" src="CLin.jpg" alt="Collagen">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('CL')">ก่อนหน้า</button>
+                    <button onclick="nextImage('CL')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
@@ -198,7 +235,13 @@
     <div id="popup-FO" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('FO')">&times;</span>
-            <img src="FOin.jpg" alt="Fish oil">
+            <div class="popup-gallery">
+                <img id="img-FO" src="FOin.jpg" alt="Fish oil">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('FO')">ก่อนหน้า</button>
+                    <button onclick="nextImage('FO')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
@@ -206,7 +249,13 @@
     <div id="popup-HR" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('HR')">&times;</span>
-            <img src="HRin.jpg" alt="Harigo">
+            <div class="popup-gallery">
+                <img id="img-HR" src="HRin.jpg" alt="Harigo">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('HR')">ก่อนหน้า</button>
+                    <button onclick="nextImage('HR')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
@@ -214,7 +263,13 @@
     <div id="popup-GT" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('GT')">&times;</span>
-            <img src="GTin.jpg" alt="L-Gluta">
+            <div class="popup-gallery">
+                <img id="img-GT" src="GTin.jpg" alt="L-Gluta">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('GT')">ก่อนหน้า</button>
+                    <button onclick="nextImage('GT')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
@@ -222,7 +277,13 @@
     <div id="popup-LT" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('LT')">&times;</span>
-            <img src="LTin.jpg" alt="Lutein & Zeaxanthin">
+            <div class="popup-gallery">
+                <img id="img-LT" src="LTin.jpg" alt="Lutein & Zeaxanthin">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('LT')">ก่อนหน้า</button>
+                    <button onclick="nextImage('LT')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
@@ -230,7 +291,13 @@
     <div id="popup-MA" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('MA')">&times;</span>
-            <img src="MAin.jpg" alt="Magnesium">
+            <div class="popup-gallery">
+                <img id="img-MA" src="MAin.jpg" alt="Magnesium">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('MA')">ก่อนหน้า</button>
+                    <button onclick="nextImage('MA')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
@@ -238,17 +305,50 @@
     <div id="popup-MT" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup('MT')">&times;</span>
-            <img src="MTin.jpg" alt="Multivitamin">
+            <div class="popup-gallery">
+                <img id="img-MT" src="MTin.jpg" alt="Multivitamin">
+                <div class="gallery-buttons">
+                    <button onclick="prevImage('MT')">ก่อนหน้า</button>
+                    <button onclick="nextImage('MT')">ถัดไป</button>
+                </div>
+            </div>
             <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
         </div>
     </div>
     
 <script>
+    const images = {
+        AC: ["ACin.jpg", "ACgf.jpg"],
+        CA: ["CAin.jpg", "CAgf.jpg"],
+        CL: ["CLin.jpg", "CLgf.jpg"],
+        FO: ["FOin.jpg", "FOgf.jpg"],
+        HR: ["HRin.jpg", "HRgf.jpg"],
+        GT: ["GTin.jpg", "GTgf.jpg"],
+        LT: ["LTin.jpg", "LTgf.jpg"],
+        MA: ["MAin.jpg", "MAgf.jpg"],
+        MT: ["MTin.jpg", "MTgf.jpg"]
+    };
+
+    const currentIndex = {};
+
     function openPopup(code) {
         document.getElementById("popup-" + code).style.display = "block";
+        currentIndex[code] = 0;
+        document.getElementById("img-" + code).src = images[code][0];
     }
+
     function closePopup(code) {
         document.getElementById("popup-" + code).style.display = "none";
+    }
+
+    function nextImage(code) {
+        currentIndex[code] = (currentIndex[code] + 1) % images[code].length;
+        document.getElementById("img-" + code).src = images[code][currentIndex[code]];
+    }
+
+    function prevImage(code) {
+        currentIndex[code] = (currentIndex[code] - 1 + images[code].length) % images[code].length;
+        document.getElementById("img-" + code).src = images[code][currentIndex[code]];
     }
 </script>
 </body>
