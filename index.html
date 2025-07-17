@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuvitra Products</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #fafafa, #f6f8fb, #fff9f9);
+            text-align: center;
+        }
+        header {
+            padding: 1.5rem 1rem;
+            background-color: #003366;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            width: 80px;
+            height: auto;
+        }
+        .header-title {
+            font-size: 2rem;
+            text-align: center;
+            max-width: 100%;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .product {
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .product:hover {
+            transform: scale(1.05);
+        }
+        .product img {
+            width: 140px;
+            height: auto;
+        }
+        .product-name {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            padding-top: 10vh;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .popup-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        .popup-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+        .popup-content a {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1.2rem;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+        .close {
+            position: absolute;
+            right: 30px;
+            top: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+        @media screen and (max-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media screen and (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-group">
+            <img src="mascot.PNG" alt="Mascot" class="logo">
+            <div class="header-title">ผลิตภัณฑ์เสริมอาหาร Nuvitra by คลินิคยา มอ ออ จังหวัดตรัง</div>
+        </div>
+    </header>
+    <div class="grid">
+
+        <div class="product" style="background-color: #FFE5B4;" onclick="openPopup('AC')">
+            <img src="AC.jpg" alt="Acerola cherry plus">
+            <div class="product-name">Acerola cherry plus</div>
+        </div>
+    
+        <div class="product" style="background-color: #E0F7FA;" onclick="openPopup('CA')">
+            <img src="CA.jpg" alt="Calcium L-threonate plus UC II">
+            <div class="product-name">Calcium L-threonate plus UC II</div>
+        </div>
+    
+        <div class="product" style="background-color: #FCE4EC;" onclick="openPopup('CL')">
+            <img src="CL.jpg" alt="Collagen">
+            <div class="product-name">Collagen</div>
+        </div>
+    
+        <div class="product" style="background-color: #E8F5E9;" onclick="openPopup('FO')">
+            <img src="FO.jpg" alt="Fish oil">
+            <div class="product-name">Fish oil</div>
+        </div>
+    
+        <div class="product" style="background-color: #EFEBE9;" onclick="openPopup('HR')">
+            <img src="HR.jpg" alt="Harigo">
+            <div class="product-name">Harigo</div>
+        </div>
+    
+        <div class="product" style="background-color: #F8BBD0;" onclick="openPopup('GT')">
+            <img src="GT.jpg" alt="L-Gluta">
+            <div class="product-name">L-Gluta</div>
+        </div>
+    
+        <div class="product" style="background-color: #FFF9C4;" onclick="openPopup('LT')">
+            <img src="LT.jpg" alt="Lutein & Zeaxanthin">
+            <div class="product-name">Lutein & Zeaxanthin</div>
+        </div>
+    
+        <div class="product" style="background-color: #E3F2FD;" onclick="openPopup('MA')">
+            <img src="MA.jpg" alt="Magnesium">
+            <div class="product-name">Magnesium</div>
+        </div>
+    
+        <div class="product" style="background-color: #F3E5F5;" onclick="openPopup('MT')">
+            <img src="MT.jpg" alt="Multivitamin">
+            <div class="product-name">Multivitamin</div>
+        </div>
+    </div>
+    <div id="popup-AC" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('AC')">&times;</span>
+            <img src="ACin.jpg" alt="Acerola cherry plus">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+    <div id="popup-CA" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('CA')">&times;</span>
+            <img src="CAin.jpg" alt="Calcium L-threonate plus UC II">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+    <div id="popup-CL" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('CL')">&times;</span>
+            <img src="CLin.jpg" alt="Collagen">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+    <div id="popup-FO" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('FO')">&times;</span>
+            <img src="FOin.jpg" alt="Fish oil">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+    <div id="popup-HR" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('HR')">&times;</span>
+            <img src="HRin.jpg" alt="Harigo">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+    <div id="popup-GT" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('GT')">&times;</span>
+            <img src="GTin.jpg" alt="L-Gluta">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+    <div id="popup-LT" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('LT')">&times;</span>
+            <img src="LTin.jpg" alt="Lutein & Zeaxanthin">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+    <div id="popup-MA" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('MA')">&times;</span>
+            <img src="MAin.jpg" alt="Magnesium">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+    <div id="popup-MT" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('MT')">&times;</span>
+            <img src="MTin.jpg" alt="Multivitamin">
+            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+        </div>
+    </div>
+    
+<script>
+    function openPopup(code) {
+        document.getElementById("popup-" + code).style.display = "block";
+    }
+    function closePopup(code) {
+        document.getElementById("popup-" + code).style.display = "none";
+    }
+</script>
+</body>
+</html>
