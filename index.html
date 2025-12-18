@@ -4,373 +4,467 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nuvitra Products</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet" />
     <style>
+        :root {
+            --primary-color: #003366;
+            --accent-color: #007bff;
+            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            --card-hover-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
         body {
             font-family: 'Kanit', sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #fafafa, #f6f8fb, #fff9f9);
-            text-align: center;
+            background: var(--bg-gradient);
+            color: #333;
+            min-height: 100vh;
         }
+
+        /* --- Header Styling --- */
         header {
-            padding: 1.5rem 1rem;
-            background-color: #003366;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-        .header-group {
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
             gap: 1rem;
         }
+
         .logo {
-            width: 80px;
+            width: 60px;
             height: auto;
+            transition: transform 0.3s;
         }
+
         .header-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
             text-align: center;
-            max-width: 100%;
         }
+
+        /* --- Grid Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            padding-bottom: 4rem;
+        }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Auto Responsive */
             gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: auto;
         }
-        .product {
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+
+        /* --- Product Card --- */
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.02);
         }
-        .product:hover {
-            transform: scale(1.05);
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-hover-shadow);
         }
-        .product img {
+
+        .product-img-wrapper {
             width: 140px;
-            height: auto;
+            height: 140px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
         }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* เปลี่ยนเป็น cover ให้เต็มวงกลมสวยๆ */
+            border-radius: 50%;
+        }
+
         .product-name {
-            margin-top: 1rem;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 0.5rem;
+            min-height: 3rem; /* กันข้อความยาวแล้วการ์ดสูงไม่เท่ากัน */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        .product-code {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        /* --- Popup Modal --- */
         .popup {
             display: none;
             position: fixed;
             z-index: 100;
-            padding-top: 10vh;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+
+        .popup.show {
+            display: flex;
+            opacity: 1;
+        }
+
         .popup-content {
             background-color: #fff;
-            margin: auto;
-            padding: 2rem;
-            border-radius: 12px;
+            padding: 2.5rem;
+            border-radius: 24px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             text-align: center;
             position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
-        .popup-gallery {
-            position: relative;
+
+        .popup.show .popup-content {
+            transform: scale(1);
         }
-        .popup-gallery img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-        }
-        .gallery-buttons {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-        .gallery-buttons button {
-            padding: 0.5rem 1rem;
-            font-family: 'Kanit', sans-serif;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .popup-content a {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.5rem 1.2rem;
-            background-color: #007bff;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-        }
-        .close {
+
+        .close-btn {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
-            color: black;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #aaa;
             background: none;
             border: none;
             cursor: pointer;
             z-index: 10;
+        }
 
-            position: absolute;
-            right: 30px;
-            top: 20px;
-            font-size: 2rem;
-            color: white;
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .popup-gallery {
+            position: relative;
+            margin-bottom: 1.5rem;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .popup-gallery img {
+            max-width: 100%;
+            max-height: 400px;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* Navigation Controls */
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 5;
         }
-        @media screen and (max-width: 900px) {
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+
+        .nav-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
         }
+
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
+        .image-counter {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+            background: rgba(0,0,0,0.05);
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+            background-color: #0056b3;
+        }
+        
+        /* สไตล์สำหรับ Placeholder เมื่อรูปโหลดไม่ได้ */
+        .img-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 300px;
+            background-color: #f0f0f0;
+            color: #aaa;
+        }
+        .img-placeholder span {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive adjustments */
         @media screen and (max-width: 600px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
+            .header-group { flex-direction: column; }
+            .grid { grid-template-columns: 1fr; }
+            .popup-content { padding: 1.5rem; width: 85%; }
+            .product-img-wrapper { width: 120px; height: 120px; }
         }
     </style>
 </head>
 <body>
+
     <header>
-        <div class="header-group">
-            <img src="mascot.png" alt="Mascot" class="logo">
+        <div class="header-container">
+            <img src="mascot.png" alt="Mascot" class="logo" onerror="this.style.display='none'">
             <div class="header-title">ผลิตภัณฑ์เสริมอาหาร Nuvitra by คลินิคยา มอ ออ จังหวัดตรัง</div>
         </div>
     </header>
-    <div class="grid">
 
-        <div class="product" style="background-color: #FFE5B4;" onclick="openPopup('AC')">
-            <img src="AC.jpg" alt="Acerola cherry plus">
-            <div class="product-name">Acerola cherry plus</div>
-        </div>
-    
-        <div class="product" style="background-color: #E0F7FA;" onclick="openPopup('CA')">
-            <img src="CA.jpg" alt="Calcium L-threonate plus UC II">
-            <div class="product-name">Calcium L-threonate plus UC II</div>
-        </div>
-    
-        <div class="product" style="background-color: #FCE4EC;" onclick="openPopup('CL')">
-            <img src="CL.jpg" alt="Collagen">
-            <div class="product-name">Collagen</div>
-        </div>
-    
-        <div class="product" style="background-color: #E8F5E9;" onclick="openPopup('FO')">
-            <img src="FO.jpg" alt="Fish oil">
-            <div class="product-name">Fish oil</div>
-        </div>
-    
-        <div class="product" style="background-color: #EFEBE9;" onclick="openPopup('HR')">
-            <img src="HR.jpg" alt="Harigo">
-            <div class="product-name">Harigo</div>
-        </div>
-    
-        <div class="product" style="background-color: #F8BBD0;" onclick="openPopup('GT')">
-            <img src="GT.jpg" alt="L-Gluta">
-            <div class="product-name">L-Gluta</div>
-        </div>
-    
-        <div class="product" style="background-color: #FFF9C4;" onclick="openPopup('LT')">
-            <img src="LT.jpg" alt="Lutein & Zeaxanthin">
-            <div class="product-name">Lutein & Zeaxanthin</div>
-        </div>
-    
-        <div class="product" style="background-color: #E3F2FD;" onclick="openPopup('MA')">
-            <img src="MA.jpg" alt="Magnesium">
-            <div class="product-name">Magnesium</div>
-        </div>
-    
-        <div class="product" style="background-color: #F3E5F5;" onclick="openPopup('MT')">
-            <img src="MT.jpg" alt="Multivitamin">
-            <div class="product-name">Multivitamin</div>
-        </div>
+    <div class="container">
+        <div id="product-grid" class="grid"></div>
     </div>
-    <div id="popup-AC" class="popup">
+
+    <div id="main-popup" class="popup">
         <div class="popup-content">
-            <span class="close" onclick="closePopup('AC')">&times;</span>
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            
+            <h2 id="popup-title" style="margin-top: 0; color: var(--primary-color);">Product Name</h2>
+            
             <div class="popup-gallery">
-                <img id="img-AC" src="ACin.jpg" alt="Acerola cherry plus">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('AC')">ก่อนหน้า</button>
-                    <button onclick="nextImage('AC')">ถัดไป</button>
+                <button class="nav-btn prev-btn" onclick="changeImage(-1)">&#10094;</button>
+                <img id="popup-img" src="" alt="Product Image">
+                <div id="popup-placeholder" class="img-placeholder" style="display: none;">
+                    <span>📷</span>
+                    <p>Image Coming Soon</p>
                 </div>
+                <button class="nav-btn next-btn" onclick="changeImage(1)">&#10095;</button>
             </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
+            
+            <div id="image-counter" class="image-counter">1 / 4</div>
+            <br>
+            <a id="popup-link" href="#" target="_blank" class="cta-button">
+                ▶ รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย
+            </a>
         </div>
     </div>
-    
-    <div id="popup-CA" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('CA')">&times;</span>
-            <div class="popup-gallery">
-                <img id="img-CA" src="CAin.jpg" alt="Calcium L-threonate plus UC II">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('CA')">ก่อนหน้า</button>
-                    <button onclick="nextImage('CA')">ถัดไป</button>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
-        </div>
-    </div>
-    
-    <div id="popup-CL" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('CL')">&times;</span>
-            <div class="popup-gallery">
-                <img id="img-CL" src="CLin.jpg" alt="Collagen">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('CL')">ก่อนหน้า</button>
-                    <button onclick="nextImage('CL')">ถัดไป</button>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
-        </div>
-    </div>
-    
-    <div id="popup-FO" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('FO')">&times;</span>
-            <div class="popup-gallery">
-                <img id="img-FO" src="FOin.jpg" alt="Fish oil">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('FO')">ก่อนหน้า</button>
-                    <button onclick="nextImage('FO')">ถัดไป</button>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
-        </div>
-    </div>
-    
-    <div id="popup-HR" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('HR')">&times;</span>
-            <div class="popup-gallery">
-                <img id="img-HR" src="HRin.jpg" alt="Harigo">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('HR')">ก่อนหน้า</button>
-                    <button onclick="nextImage('HR')">ถัดไป</button>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
-        </div>
-    </div>
-    
-    <div id="popup-GT" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('GT')">&times;</span>
-            <div class="popup-gallery">
-                <img id="img-GT" src="GTin.jpg" alt="L-Gluta">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('GT')">ก่อนหน้า</button>
-                    <button onclick="nextImage('GT')">ถัดไป</button>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
-        </div>
-    </div>
-    
-    <div id="popup-LT" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('LT')">&times;</span>
-            <div class="popup-gallery">
-                <img id="img-LT" src="LTin.jpg" alt="Lutein & Zeaxanthin">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('LT')">ก่อนหน้า</button>
-                    <button onclick="nextImage('LT')">ถัดไป</button>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
-        </div>
-    </div>
-    
-    <div id="popup-MA" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('MA')">&times;</span>
-            <div class="popup-gallery">
-                <img id="img-MA" src="MAin.jpg" alt="Magnesium">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('MA')">ก่อนหน้า</button>
-                    <button onclick="nextImage('MA')">ถัดไป</button>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
-        </div>
-    </div>
-    
-    <div id="popup-MT" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup('MT')">&times;</span>
-            <div class="popup-gallery">
-                <img id="img-MT" src="MTin.jpg" alt="Multivitamin">
-                <div class="gallery-buttons">
-                    <button onclick="prevImage('MT')">ก่อนหน้า</button>
-                    <button onclick="nextImage('MT')">ถัดไป</button>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link" target="_blank">รับชมวิดีโอจุดเด่นสินค้าและเทคนิคการขาย</a>
-        </div>
-    </div>
-    
 
 <script>
-    const images = {
-        AC: ["ACin.jpg", "ACgf.jpg"],
-        CA: ["CAin.jpg", "CAgf.jpg"],
-        CL: ["CLin.jpg", "CLgf.jpg"],
-        FO: ["FOin.jpg", "FOgf.jpg"],
-        HR: ["HRin.jpg", "HRgf.jpg"],
-        GT: ["GTin.jpg", "GTgf.jpg"],
-        LT: ["LTin.jpg", "LTgf.jpg"],
-        MA: ["MAin.jpg", "MAgf.jpg"],
-        MT: ["MTin.jpg", "MTgf.jpg"]
-    };
+    // --- 1. ข้อมูลสินค้าและลิงก์ ---
+    const imageSuffixes = ['in', 'gf', 'pm', 'fda']; 
+    // ลิงก์วิดีโอกลาง (ใช้ร่วมกันไปก่อน)
+    const defaultVideoLink = "https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link";
 
-    const currentIndex = {};
+    const products = [
+        // สินค้าเดิม
+        { code: 'AC', name: 'Acerola cherry plus', color: '#FFE5B4' },
+        { code: 'CA', name: 'Calcium L-threonate plus UC II', color: '#E0F7FA' },
+        { code: 'CL', name: 'Collagen', color: '#FCE4EC' },
+        { code: 'FO', name: 'Fish oil', color: '#E8F5E9' },
+        { code: 'HR', name: 'Harigo', color: '#EFEBE9' },
+        { code: 'GT', name: 'L-Gluta', color: '#F8BBD0' },
+        { code: 'LT', name: 'Lutein & Zeaxanthin', color: '#FFF9C4' },
+        { code: 'MA', name: 'Magnesium', color: '#E3F2FD' },
+        { code: 'MT', name: 'Multivitamin', color: '#F3E5F5' },
 
-    function openPopup(code) {
-        document.getElementById("popup-" + code).style.display = "block";
-        currentIndex[code] = 0;
-        document.getElementById("img-" + code).src = images[code][0];
-    }
+        // --- สินค้าใหม่ 4 ตัว (เพิ่มตามที่ขอ) ---
+        // ZN: ธีมสีเทาอ่อน
+        { code: 'ZN', name: 'Zinc plus C', color: '#F5F5F5' }, 
+        // Dp: ธีมสีม่วงอ่อน
+        { code: 'Dp', name: 'Date palm plus', color: '#F3E5F5' },
+        // AS: ธีมสีแดง
+        { code: 'AS', name: 'Astaxanthin plus', color: '#FFCDD2' },
+        // COC: ธีมสีน้ำเงินเข้ม (ใช้สีฟ้าเข้มในการ์ดเพื่อให้ไล่เฉดแล้วตัวหนังสือยังอ่านออก)
+        { code: 'COC', name: 'Colla cal plus', color: '#1976D2' } 
+    ];
 
-    function closePopup(code) {
-        document.getElementById("popup-" + code).style.display = "none";
-    }
+    // --- 2. ฟังก์ชันสร้าง Grid ---
+    const gridContainer = document.getElementById('product-grid');
 
-    function nextImage(code) {
-        currentIndex[code] = (currentIndex[code] + 1) % images[code].length;
-        document.getElementById("img-" + code).src = images[code][currentIndex[code]];
-    }
+    products.forEach(product => {
+        // ใช้ชื่อย่อเป็นชื่อรูปปก เช่น ZN.jpg
+        const coverImage = `${product.code}.jpg`; 
 
-    function prevImage(code) {
-        currentIndex[code] = (currentIndex[code] - 1 + images[code].length) % images[code].length;
-        document.getElementById("img-" + code).src = images[code][currentIndex[code]];
-    }
-
-    // ✅ Close popup when clicking outside popup-content
-    document.addEventListener('click', function(event) {
-        const popups = document.querySelectorAll('.popup');
-        popups.forEach(popup => {
-            if (event.target === popup) {
-                popup.style.display = 'none';
-            }
-        });
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        // ไล่เฉดสีพื้นหลัง: ขาว -> สีประจำสินค้า
+        card.style.background = `linear-gradient(135deg, white 40%, ${product.color} 100%)`;
+        
+        // ถ้าเป็นสินค้าสีเข้ม (COC) ให้ลองปรับสีตัวอักษร code เล็กน้อยเพื่อให้ชัดขึ้นได้ แต่ Default ดำก็น่าจะโอเค
+        
+        card.innerHTML = `
+            <div class="product-img-wrapper">
+                <img src="${coverImage}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size:2rem; color:#ccc\\'>${product.code}</span>'">
+            </div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-code">CODE: ${product.code}</div>
+        `;
+        
+        card.onclick = () => openPopup(product);
+        gridContainer.appendChild(card);
     });
+
+    // --- 3. จัดการ Popup & Gallery ---
+    const popup = document.getElementById('main-popup');
+    const popupImg = document.getElementById('popup-img');
+    const popupPlaceholder = document.getElementById('popup-placeholder');
+    const popupTitle = document.getElementById('popup-title');
+    const popupLink = document.getElementById('popup-link');
+    const counterDisplay = document.getElementById('image-counter');
+
+    let currentProductCode = '';
+    let currentImageIndex = 0;
+    let currentImageList = [];
+
+    function openPopup(product) {
+        currentProductCode = product.code;
+        currentImageIndex = 0;
+        
+        // สร้างรายชื่อไฟล์ภาพตาม Suffixes
+        currentImageList = imageSuffixes.map(suffix => `${product.code}${suffix}.jpg`);
+
+        // ตั้งค่าชื่อสินค้า และ ลิงก์วิดีโอ (ถ้าในอนาคตมีลิงก์แยก ให้ใส่ product.video)
+        popupTitle.innerText = product.name;
+        popupLink.href = product.video || defaultVideoLink; 
+        
+        updateGalleryImage();
+        
+        popup.style.display = 'flex';
+        setTimeout(() => popup.classList.add('show'), 10);
+    }
+
+    function closePopup() {
+        popup.classList.remove('show');
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 300);
+    }
+
+    function changeImage(direction) {
+        currentImageIndex += direction;
+        if (currentImageIndex >= currentImageList.length) currentImageIndex = 0;
+        else if (currentImageIndex < 0) currentImageIndex = currentImageList.length - 1;
+        
+        updateGalleryImage();
+    }
+
+    function updateGalleryImage() {
+        const imgSrc = currentImageList[currentImageIndex];
+        
+        // Reset state
+        popupImg.style.display = 'none';
+        popupPlaceholder.style.display = 'flex'; // โชว์ placeholder ก่อน
+        popupImg.style.opacity = 0;
+
+        // ลองโหลดรูปภาพ
+        const imgLoader = new Image();
+        imgLoader.src = imgSrc;
+        
+        imgLoader.onload = function() {
+            // ถ้ารูปโหลดได้จริง
+            popupPlaceholder.style.display = 'none';
+            popupImg.src = imgSrc;
+            popupImg.style.display = 'block';
+            setTimeout(() => popupImg.style.opacity = 1, 50);
+        };
+        
+        imgLoader.onerror = function() {
+            // ถ้ารูปโหลดไม่ได้ (ไฟล์ยังไม่มา) ให้แสดง Placeholder ต่อไป
+            // ไม่ต้องทำอะไรเพิ่มเพราะเราเปิด Placeholder ไว้แล้ว
+            console.log("Image not found: " + imgSrc);
+        };
+
+        counterDisplay.innerText = `${currentImageIndex + 1} / ${currentImageList.length}`;
+    }
+
+    // Event Listeners
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) closePopup();
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") closePopup();
+        if (popup.style.display === 'flex') {
+            if (e.key === "ArrowLeft") changeImage(-1);
+            if (e.key === "ArrowRight") changeImage(1);
+        }
+    });
+
 </script>
 </body>
 </html>
