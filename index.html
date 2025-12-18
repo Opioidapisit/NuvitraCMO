@@ -4,44 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nuvitra Products</title>
-    <!-- นำเข้าฟอนต์ Kanit -->
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    
-    <!-- นำเข้า Icon (Optional: ใช้สำหรับลูกศรหรือไอคอนตกแต่ง ถ้าต้องการ) -->
     
     <style>
         :root {
-            /* Palette สีหลัก */
-            --primary-color: #1a365d; /* น้ำเงินเข้ม สุขุม */
-            --accent-color: #2563eb; /* สีฟ้าสดใส สำหรับปุ่ม */
+            --primary-color: #1a365d;
+            --accent-color: #2563eb;
             --text-main: #1f2937;
             --text-muted: #64748b;
-            
-            /* พื้นหลังดูแพง ไม่ใช่ขาวล้วน */
             --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);
         }
 
         body {
             font-family: 'Kanit', sans-serif;
             margin: 0;
-            /* พื้นหลังสีเทาอมฟ้าไล่เฉด ดูทันสมัย */
             background: var(--bg-gradient);
-            background-attachment: fixed; /* ให้พื้นหลังนิ่งเวลาเลื่อน */
+            background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
+            /* ป้องกันการเลื่อนด้านข้าง */
+            overflow-x: hidden; 
         }
 
-        /* --- Modern Header (Glassmorphism) --- */
+        /* --- Header --- */
         header {
-            /* ทำให้ Header ลอยและโปร่งแสง */
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px); /* เอฟเฟกต์กระจกฝ้า */
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1.2rem 1rem;
-            position: sticky; /* ตรึงไว้ด้านบน */
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1rem;
+            position: sticky;
             top: 0;
             z-index: 50;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* เงาฟุ้งๆ */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             border-bottom: 1px solid rgba(255,255,255,0.5);
         }
 
@@ -50,93 +43,64 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: center; /* จัดกึ่งกลาง */
-            gap: 1.5rem;
+            justify-content: center;
+            gap: 1rem;
         }
 
         .logo {
-            width: 70px;
+            width: 50px; /* ลดขนาดโลโก้ลงเล็กน้อย */
             height: auto;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); /* เงาให้โลโก้ */
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
         
-        .logo:hover {
-            transform: scale(1.1) rotate(-5deg);
-        }
+        .header-text-group { text-align: left; }
+        .header-title { font-size: 1.4rem; font-weight: 600; color: var(--primary-color); line-height: 1.1; }
+        .header-subtitle { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
 
-        .header-text-group {
-            text-align: left;
-        }
-
-        .header-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-
-        .header-subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        /* --- Grid Layout --- */
+        /* --- Layout Desktop (ค่าเริ่มต้น) --- */
         .container {
             max-width: 1200px;
-            margin: 3rem auto;
+            margin: 2rem auto;
             padding: 0 1.5rem;
-            padding-bottom: 5rem;
+            padding-bottom: 4rem;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Desktop ปกติ */
+            gap: 2rem;
         }
 
-        /* --- Modern Product Card --- */
+        /* --- Product Card (Desktop) --- */
         .product-card {
             background: rgba(255, 255, 255, 0.9);
-            border-radius: 24px;
-            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            padding: 1.5rem;
             text-align: center;
             cursor: pointer;
-            
-            /* เงาแบบ Soft Shadow */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* เด้งดึ๋งเล็กน้อย */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
             border: 1px solid rgba(255,255,255,0.8);
-            position: relative;
-            overflow: hidden;
         }
 
         .product-card:hover {
-            transform: translateY(-10px); /* ลอยขึ้นเมื่อเอาเมาส์ชี้ */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            background: #ffffff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            background: #fff;
+            z-index: 2;
         }
 
-        /* วงกลมพื้นหลังรูปภาพ */
         .product-img-wrapper {
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 1.5rem;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
             border-radius: 50%;
             background-color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border: 4px solid white; /* ขอบขาวรอบรูป */
-            position: relative;
-            transition: transform 0.4s ease;
-        }
-        
-        .product-card:hover .product-img-wrapper {
-            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 3px solid white;
         }
 
         .product-card img {
@@ -146,35 +110,84 @@
             border-radius: 50%;
         }
 
-        .product-info {
-            position: relative;
-            z-index: 2;
-        }
-
         .product-name {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: 500;
             color: #334155;
-            margin-bottom: 0.5rem;
-            min-height: 3.6rem; /* จัดบรรทัดให้เท่ากัน */
+            margin-bottom: 0.3rem;
+            min-height: 2.5rem; /* ความสูงขั้นต่ำสำหรับชื่อ 2 บรรทัด */
             display: flex;
             align-items: center;
             justify-content: center;
-            line-height: 1.4;
+            line-height: 1.2;
         }
 
         .product-badge {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.15rem 0.6rem;
             background-color: #f1f5f9;
             color: #64748b;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
             font-weight: 500;
-            letter-spacing: 1px;
         }
 
-        /* --- Modern Popup --- */
+        /* --- Mobile Optimization (สำคัญที่สุดสำหรับการแสดงผลหน้าเดียว) --- */
+        @media screen and (max-width: 600px) {
+            header { padding: 0.5rem; }
+            .header-container { gap: 0.5rem; }
+            .header-title { font-size: 1.2rem; }
+            .header-subtitle { font-size: 0.7rem; }
+            
+            .container {
+                margin: 1rem auto;
+                padding: 0 0.5rem; /* ลดขอบข้าง */
+            }
+
+            .grid {
+                /* เปลี่ยนเป็น 3 คอลัมน์ เพื่อให้เห็นสินค้าเยอะขึ้นในหน้าเดียว */
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 0.8rem; /* ลดช่องว่างระหว่างไอคอน */
+            }
+
+            .product-card {
+                padding: 0.8rem 0.4rem; /* ลด Padding ในการ์ด */
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                min-height: 140px; /* ความสูงขั้นต่ำของการ์ด */
+            }
+
+            .product-img-wrapper {
+                width: 65px; /* ลดขนาดรูปลง */
+                height: 65px;
+                margin: 0 auto 0.5rem;
+                border-width: 2px;
+            }
+
+            .product-name {
+                font-size: 0.75rem; /* ลดขนาดฟอนต์ */
+                margin-bottom: 0.2rem;
+                min-height: 2.2rem; /* พื้นที่สำหรับชื่อ 2-3 บรรทัด */
+                align-items: start; /* ให้ชื่อเริ่มจากด้านบน */
+            }
+
+            .product-badge {
+                font-size: 0.6rem;
+                padding: 0.1rem 0.4rem;
+                align-self: center;
+            }
+        }
+        
+        /* หน้าจอเล็กมาก (เช่น iPhone SE) อาจต้องใช้ 3 คอลัมน์แต่อัดแน่นหน่อย */
+        @media screen and (max-width: 380px) {
+            .grid { gap: 0.5rem; }
+            .product-img-wrapper { width: 55px; height: 55px; }
+            .product-name { font-size: 0.7rem; }
+        }
+
+        /* --- Popup (เหมือนเดิม) --- */
         .popup {
             display: none;
             position: fixed;
@@ -183,158 +196,66 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(15, 23, 42, 0.6); /* พื้นหลังมืดลงแบบสี Navy */
-            backdrop-filter: blur(8px);
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(5px);
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
         }
 
-        .popup.show {
-            display: flex;
-            opacity: 1;
-        }
+        .popup.show { display: flex; opacity: 1; }
 
         .popup-content {
             background: white;
-            padding: 0; /* ลบ padding รอบนอกออกเพื่อจัด layout */
-            border-radius: 24px;
+            padding: 0;
+            border-radius: 20px;
             width: 90%;
-            max-width: 800px;
-            position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            transform: scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 600px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-        }
-
-        .popup.show .popup-content {
-            transform: scale(1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         .popup-header {
-            padding: 1.5rem;
+            padding: 1rem 1.5rem;
             background: #f8fafc;
             border-bottom: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        .popup-header h2 { margin: 0; font-size: 1.2rem; color: var(--primary-color); }
+        .close-btn { background: none; border: none; font-size: 1.8rem; color: #94a3b8; cursor: pointer; }
 
-        .popup-header h2 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: #94a3b8;
-            cursor: pointer;
-            transition: color 0.2s;
-            line-height: 1;
-        }
-        
-        .close-btn:hover { color: #ef4444; }
-
-        .popup-body {
-            padding: 2rem;
-            text-align: center;
-        }
+        .popup-body { padding: 1.5rem; text-align: center; }
 
         .popup-gallery {
             position: relative;
-            min-height: 400px; /* เพิ่มความสูง */
+            min-height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: #f1f5f9;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
         }
-
-        .popup-gallery img {
-            max-width: 100%;
-            max-height: 400px;
-            object-fit: contain;
-        }
+        .popup-gallery img { max-width: 100%; max-height: 300px; object-fit: contain; }
 
         .nav-btn {
-            background-color: white;
-            border: 1px solid #e2e8f0;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            z-index: 10;
+            background: white; border: none; width: 40px; height: 40px; border-radius: 50%;
+            position: absolute; top: 50%; transform: translateY(-50%);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
         }
-
-        .nav-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
+        .prev-btn { left: 10px; } .next-btn { right: 10px; }
 
         .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(to right, #2563eb, #3b82f6);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 20px -3px rgba(37, 99, 235, 0.4);
-            filter: brightness(110%);
-        }
-
-        /* Placeholder Styling */
-        .img-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            color: #94a3b8;
-        }
-        .img-placeholder .icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
-
-        /* Responsive */
-        @media screen and (max-width: 600px) {
-            .header-container { flex-direction: column; text-align: center; gap: 0.5rem; }
-            .header-text-group { text-align: center; }
-            .grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .popup-content { width: 95%; max-height: 90vh; overflow-y: auto; }
-            .popup-gallery { min-height: 250px; }
-            .popup-gallery img { max-height: 250px; }
-            .nav-btn { width: 36px; height: 36px; font-size: 1rem; }
+            display: inline-block; padding: 0.8rem 2rem;
+            background: var(--accent-color); color: white;
+            border-radius: 50px; text-decoration: none; font-weight: 500;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
         }
     </style>
 </head>
@@ -342,7 +263,6 @@
 
     <header>
         <div class="header-container">
-            <!-- โลโก้: อย่าลืมไฟล์ mascot.png -->
             <img src="mascot.png" alt="Mascot" class="logo" onerror="this.style.display='none'">
             <div class="header-text-group">
                 <div class="header-title">Nuvitra Products</div>
@@ -355,97 +275,75 @@
         <div id="product-grid" class="grid"></div>
     </div>
 
-    <!-- Popup Modal -->
+    <!-- Popup -->
     <div id="main-popup" class="popup">
         <div class="popup-content">
             <div class="popup-header">
-                <h2 id="popup-title">Product Name</h2>
+                <h2 id="popup-title">Product</h2>
                 <button class="close-btn" onclick="closePopup()">&times;</button>
             </div>
-            
             <div class="popup-body">
                 <div class="popup-gallery">
                     <button class="nav-btn prev-btn" onclick="changeImage(-1)">&#10094;</button>
-                    
-                    <!-- รูปภาพหลัก -->
-                    <img id="popup-img" src="" alt="Product Image">
-                    
-                    <!-- Placeholder ตอนโหลด หรือไม่มีรูป -->
-                    <div id="popup-placeholder" class="img-placeholder" style="display: none;">
-                        <span class="icon">🖼️</span>
-                        <p>Image Loading / Coming Soon</p>
-                    </div>
-
+                    <img id="popup-img" src="" alt="Product">
+                    <div id="popup-placeholder" style="display:none; color:#94a3b8;">Loading...</div>
                     <button class="nav-btn next-btn" onclick="changeImage(1)">&#10095;</button>
                 </div>
-                
-                <div id="image-counter" style="color: #64748b; margin-bottom: 1.5rem; font-size: 0.9rem;">1 / 4</div>
-                
-                <a id="popup-link" href="#" target="_blank" class="cta-button">
-                    <span>▶</span> รับชมวิดีโอแนะนำสินค้า
-                </a>
+                <div id="image-counter" style="margin-bottom:1rem; font-size:0.8rem; color:#64748b;"></div>
+                <a id="popup-link" href="#" target="_blank" class="cta-button">▶ รับชมวิดีโอ</a>
             </div>
         </div>
     </div>
 
 <script>
-    // --- 1. ข้อมูลสินค้าและลิงก์ ---
     const imageSuffixes = ['in', 'gf', 'pm', 'fda']; 
     const defaultVideoLink = "https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link";
 
-    // กำหนดสีพื้นหลังของการ์ดให้เป็น Gradient จางๆ ตามสีธีม
     const products = [
-        { code: 'AC', name: 'Acerola cherry plus', color: '#fff7ed' }, // ส้มอ่อนๆ
-        { code: 'CA', name: 'Calcium L-threonate', color: '#ecfeff' }, // ฟ้าอ่อน
-        { code: 'CL', name: 'Collagen plus C', color: '#fdf2f8' }, // ชมพูอ่อน
-        { code: 'FO', name: 'Fish oil', color: '#f0fdf4' }, // เขียวอ่อน
-        { code: 'HR', name: 'Harigo', color: '#fafaf9' }, // เทาอบอุ่น
-        { code: 'GT', name: 'L-Gluta', color: '#fce7f3' }, // ชมพูหวาน
-        { code: 'LT', name: 'Lutein & Zeaxanthin', color: '#fefce8' }, // เหลืองอ่อน
-        { code: 'MA', name: 'Magnesium plus', color: '#eff6ff' }, // น้ำเงินอ่อน
-        { code: 'MT', name: 'Multivitamin plus', color: '#f3e8ff' }, // ม่วงอ่อน
-        
-        // สินค้าใหม่ 4 ตัว
-        { code: 'ZN', name: 'Zinc plus C', color: '#f3f4f6' }, // เทา (Zinc)
-        { code: 'Dp', name: 'Date palm plus', color: '#fae8ff' }, // ม่วง (Date Palm)
-        { code: 'AS', name: 'Astaxanthin plus', color: '#fee2e2' }, // แดงอ่อน (Astaxanthin)
-        { code: 'COC', name: 'Colla cal plus', color: '#e0f2fe' } // ฟ้าเข้มขึ้นนิดนึง (Colla Cal)
+        { code: 'AC', name: 'Acerola cherry plus', color: '#fff7ed' },
+        { code: 'CA', name: 'Calcium L-threonate', color: '#ecfeff' },
+        { code: 'CL', name: 'Collagen plus C', color: '#fdf2f8' },
+        { code: 'FO', name: 'Fish oil', color: '#f0fdf4' },
+        { code: 'HR', name: 'Harigo', color: '#fafaf9' },
+        { code: 'GT', name: 'L-Gluta', color: '#fce7f3' },
+        { code: 'LT', name: 'Lutein & Zeaxanthin', color: '#fefce8' },
+        { code: 'MA', name: 'Magnesium plus', color: '#eff6ff' },
+        { code: 'MT', name: 'Multivitamin plus', color: '#f3e8ff' },
+        // สินค้าใหม่
+        { code: 'ZN', name: 'Zinc plus C', color: '#f3f4f6' },
+        { code: 'Dp', name: 'Date palm plus', color: '#fae8ff' },
+        { code: 'AS', name: 'Astaxanthin plus', color: '#fee2e2' },
+        { code: 'COC', name: 'Colla cal plus', color: '#e0f2fe' }
     ];
 
-    // --- 2. ฟังก์ชันสร้าง Grid ---
     const gridContainer = document.getElementById('product-grid');
 
     products.forEach(product => {
         const coverImage = `${product.code}.jpg`; 
-
         const card = document.createElement('div');
         card.className = 'product-card';
-        // ใส่สีพื้นหลังจางๆ ให้การ์ดแต่ละใบ
-        card.style.background = `linear-gradient(to bottom right, #ffffff 40%, ${product.color} 100%)`;
+        card.style.background = `linear-gradient(to bottom right, #ffffff 60%, ${product.color} 100%)`;
 
         card.innerHTML = `
             <div class="product-img-wrapper">
                 <img src="${coverImage}" alt="${product.name}" 
-                     onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size:1.5rem; color:#cbd5e1; font-weight:bold;\\'>${product.code}</span>'">
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size:1rem; color:#ccc;\\'>${product.code}</span>'">
             </div>
-            <div class="product-info">
-                <div class="product-name">${product.name}</div>
-                <div class="product-badge">${product.code}</div>
-            </div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-badge">${product.code}</div>
         `;
-        
         card.onclick = () => openPopup(product);
         gridContainer.appendChild(card);
     });
 
-    // --- 3. Logic Popup & Gallery (เหมือนเดิม แต่รองรับ UI ใหม่) ---
+    // Popup Logic
     const popup = document.getElementById('main-popup');
     const popupImg = document.getElementById('popup-img');
     const popupPlaceholder = document.getElementById('popup-placeholder');
     const popupTitle = document.getElementById('popup-title');
     const popupLink = document.getElementById('popup-link');
     const counterDisplay = document.getElementById('image-counter');
-
+    
     let currentProductCode = '';
     let currentImageIndex = 0;
     let currentImageList = [];
@@ -456,14 +354,11 @@
         currentImageList = imageSuffixes.map(suffix => `${product.code}${suffix}.jpg`);
 
         popupTitle.innerText = product.name;
-        popupLink.href = product.video || defaultVideoLink; 
+        popupLink.href = product.video || defaultVideoLink;
         
         updateGalleryImage();
-        
         popup.style.display = 'flex';
-        // ใช้ requestAnimationFrame หรือ setTimeout เพื่อให้ transition ทำงาน
-        requestAnimationFrame(() => popup.classList.add('show'));
-        // ปิดการเลื่อนหน้าเว็บหลักขณะเปิด Popup
+        setTimeout(() => popup.classList.add('show'), 10);
         document.body.style.overflow = 'hidden';
     }
 
@@ -471,7 +366,7 @@
         popup.classList.remove('show');
         setTimeout(() => {
             popup.style.display = 'none';
-            document.body.style.overflow = ''; // คืนค่าการเลื่อนหน้าเว็บ
+            document.body.style.overflow = '';
         }, 300);
     }
 
@@ -479,43 +374,25 @@
         currentImageIndex += direction;
         if (currentImageIndex >= currentImageList.length) currentImageIndex = 0;
         else if (currentImageIndex < 0) currentImageIndex = currentImageList.length - 1;
-        
         updateGalleryImage();
     }
 
     function updateGalleryImage() {
         const imgSrc = currentImageList[currentImageIndex];
-        
-        // Reset state
         popupImg.style.display = 'none';
-        popupPlaceholder.style.display = 'flex'; 
-        popupImg.style.opacity = 0;
-
+        popupPlaceholder.style.display = 'block';
+        
         const imgLoader = new Image();
         imgLoader.src = imgSrc;
-        
         imgLoader.onload = function() {
             popupPlaceholder.style.display = 'none';
             popupImg.src = imgSrc;
             popupImg.style.display = 'block';
-            setTimeout(() => popupImg.style.opacity = 1, 50);
         };
-
         counterDisplay.innerText = `${currentImageIndex + 1} / ${currentImageList.length}`;
     }
 
-    // Event Listeners
-    popup.addEventListener('click', (e) => {
-        if (e.target === popup) closePopup();
-    });
-    
-    document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape") closePopup();
-        if (popup.style.display === 'flex') {
-            if (e.key === "ArrowLeft") changeImage(-1);
-            if (e.key === "ArrowRight") changeImage(1);
-        }
-    });
+    popup.addEventListener('click', (e) => { if (e.target === popup) closePopup(); });
 </script>
 </body>
 </html>
