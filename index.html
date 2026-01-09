@@ -213,6 +213,14 @@
         .cta-button {
             display: inline-block; padding: 0.8rem 2rem; background: var(--accent-color); color: white;
             border-radius: 50px; text-decoration: none; font-weight: 500; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s;
+        }
+        /* เพิ่ม class สำหรับปุ่มที่กดไม่ได้ */
+        .cta-button.disabled {
+            background-color: #94a3b8; /* สีเทา */
+            box-shadow: none;
+            cursor: not-allowed;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -267,7 +275,7 @@
 
 <script>
     const imageSuffixes = ['in', 'gf', 'pm', 'fda']; 
-    const defaultVideoLink = "https://drive.google.com/file/d/1EUdoqZBRsVbJz5arcCll-HsDf-U8GWtq/view?usp=drive_link";
+    // const defaultVideoLink = "..." // เอาลิงก์กลางออกแล้ว
 
     const products = [
         { code: 'AC', name: 'Acerola cherry plus', color: '#fff7ed' },
@@ -324,7 +332,21 @@
         currentImageList = imageSuffixes.map(suffix => `${product.code}${suffix}.jpg`);
 
         popupTitle.innerText = product.name;
-        popupLink.href = product.video || defaultVideoLink;
+        
+        // --- ส่วนที่แก้ไข: เช็คว่ามีวิดีโอไหม ---
+        if (product.video) {
+            // ถ้ามีวิดีโอ ให้กดได้ปกติ
+            popupLink.href = product.video;
+            popupLink.innerHTML = '▶ รับชมวิดีโอ';
+            popupLink.classList.remove('disabled');
+            popupLink.style.backgroundColor = 'var(--accent-color)'; // คืนสีน้ำเงิน
+        } else {
+            // ถ้าไม่มีวิดีโอ ให้กดไม่ได้ + เปลี่ยนข้อความ
+            popupLink.removeAttribute('href'); // เอาลิงก์ออก
+            popupLink.innerHTML = '⚠️ วิดีโออยู่ระหว่างดำเนินการจัดทำ';
+            popupLink.classList.add('disabled');
+            popupLink.style.backgroundColor = '#94a3b8'; // เปลี่ยนเป็นสีเทา
+        }
         
         updateGalleryImage();
         popup.style.display = 'flex';
