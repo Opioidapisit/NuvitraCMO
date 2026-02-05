@@ -13,8 +13,12 @@
             --text-main: #1f2937;
             --text-muted: #64748b;
             --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);
-            /* เปลี่ยนเป็นสีน้ำเงินตามที่ขอ */
             --btn-blue: #0056b3; 
+            
+            /* สีปุ่มแบบพาสเทล นวลตามากๆ (Faded Colors) */
+            --btn-promote-pastel: #93c5fd; /* ฟ้าพาสเทล */
+            --btn-video-pastel: #fca5a5;   /* แดงพาสเทล */
+            --btn-disabled: #e2e8f0;       /* เทาจางๆ */
         }
 
         body {
@@ -27,7 +31,7 @@
             overflow-x: hidden; 
         }
 
-        /* --- Updated Header --- */
+        /* --- Header (คงเดิม) --- */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -46,80 +50,46 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            flex-wrap: wrap; /* ให้ตกบรรทัดได้ถ้าจอเล็กมาก */
+            flex-wrap: wrap; 
         }
 
-        /* กลุ่มด้านซ้าย (โลโก้ + ชื่อ) */
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo {
-            width: 50px;
-            height: auto;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-        
+        .header-left { display: flex; align-items: center; gap: 1rem; }
+        .logo { width: 50px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
         .header-text-group { text-align: left; }
         .header-title { font-size: 1.4rem; font-weight: 600; color: var(--primary-color); line-height: 1.1; }
         .header-subtitle { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
 
-        /* กลุ่มด้านขวา (ปุ่มลิงก์) - แก้ไขให้เรียงแนวนอน */
-        .header-right {
-            display: flex;
-            flex-direction: row; /* เรียงแนวนอน */
-            gap: 0.8rem; /* ระยะห่างระหว่างปุ่ม */
-            align-items: center;
-        }
-
+        .header-right { display: flex; flex-direction: row; gap: 0.8rem; align-items: center; }
         .header-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: white;
-            transition: transform 0.2s, box-shadow 0.2s;
-            white-space: nowrap;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            background-color: var(--btn-blue); /* ใช้สีน้ำเงินทั้งคู่ */
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.2rem;
+            border-radius: 8px; text-decoration: none; font-size: 0.85rem; font-weight: 500;
+            color: white; transition: transform 0.2s, box-shadow 0.2s; white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); background-color: var(--btn-blue);
         }
+        .header-link-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); background-color: #004494; }
 
-        .header-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            background-color: #004494; /* สีเข้มขึ้นตอนเอาเมาส์ชี้ */
-        }
+        /* --- Layout --- */
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; padding-bottom: 4rem; }
+        
+        /* Grid ใช้ขนาดเดิม (minmax 220px) */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2rem; }
 
-        /* --- Layout Desktop (เหมือนเดิม) --- */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-            padding-bottom: 4rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 2rem;
-        }
-
-        /* --- Product Card (เหมือนเดิม) --- */
+        /* --- Product Card (ปรับความสูงให้สั้นลง) --- */
         .product-card {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
-            padding: 1.5rem;
+            
+            /* ลด Padding จาก 1.5rem เหลือ 1rem เพื่อให้การ์ดสั้นลง */
+            padding: 1rem; 
+            
             text-align: center;
-            cursor: pointer;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
             transition: transform 0.2s, box-shadow 0.2s;
             border: 1px solid rgba(255,255,255,0.8);
+            
+            /* เอา height: 100% ออกเพื่อให้สูงตามเนื้อหาจริง ไม่ยืด */
+            /* display: flex; flex-direction: column; justify-content: space-between; */
+            position: relative;
         }
 
         .product-card:hover {
@@ -130,9 +100,10 @@
         }
 
         .product-img-wrapper {
-            width: 100px;
+            width: 100px; 
             height: 100px;
-            margin: 0 auto 1rem;
+            /* ลด margin ล่างจาก 1rem เหลือ 0.5rem */
+            margin: 0 auto 0.5rem; 
             border-radius: 50%;
             background-color: #fff;
             display: flex;
@@ -140,48 +111,94 @@
             justify-content: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             border: 3px solid white;
+            cursor: pointer; 
         }
 
         .product-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        .product-name { font-size: 1.1rem; font-weight: 500; color: #334155; margin-bottom: 0.3rem; min-height: 2.5rem; display: flex; align-items: center; justify-content: center; line-height: 1.2; }
-        .product-badge { display: inline-block; padding: 0.15rem 0.6rem; background-color: #f1f5f9; color: #64748b; border-radius: 12px; font-size: 0.75rem; font-weight: 500; }
+        
+        .product-name {
+            font-size: 1.1rem; font-weight: 500; color: #334155; 
+            /* ลด margin ล่าง */
+            margin-bottom: 0.5rem;
+            /* ลดความสูงขั้นต่ำลงเล็กน้อย */
+            min-height: 2.2rem; 
+            display: flex; align-items: center; justify-content: center; line-height: 1.2;
+        }
+
+        /* --- Action Buttons (ปรับให้ชิดขึ้น) --- */
+        .card-actions {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            /* ลด margin บน */
+            margin-top: 0.5rem;
+            justify-content: space-between;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.3rem 0.6rem; /* ปุ่มเล็ก */
+            border-radius: 6px; 
+            text-decoration: none;
+            font-size: 0.75rem; /* ตัวหนังสือเล็ก */
+            font-weight: 500;
+            color: white;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            box-shadow: none; /* ไม่มีเงาปุ่ม เพื่อความคลีน */
+            flex: 1; 
+            white-space: nowrap;
+        }
+
+        .btn-promote {
+            background-color: var(--btn-promote-pastel); 
+        }
+        .btn-promote:hover {
+            background-color: #60a5fa; 
+        }
+
+        .btn-video {
+            background-color: var(--btn-video-pastel); 
+        }
+        .btn-video:hover {
+            background-color: #f87171; 
+        }
+
+        .btn-video.disabled {
+            background-color: var(--btn-disabled);
+            color: #94a3b8; 
+            cursor: default;
+        }
 
         /* --- Mobile Optimization --- */
         @media screen and (max-width: 850px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: center;
-            }
+            .header-container { flex-direction: column; gap: 1rem; align-items: center; }
             .header-left { justify-content: center; }
             .header-text-group { text-align: center; }
-            
-            /* บนมือถือ ให้ปุ่มยังคงเรียงแนวนอน แต่ถ้าจอเล็กมากอาจจะบีบ */
-            .header-right { 
-                flex-direction: row; 
-                flex-wrap: wrap; 
-                justify-content: center; 
-                width: 100%; 
-            }
+            .header-right { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100%; }
             .header-link-btn { font-size: 0.8rem; padding: 0.5rem 1rem; }
         }
 
         @media screen and (max-width: 600px) {
             .container { margin: 1rem auto; padding: 0 0.5rem; }
             .grid { grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
-            .product-card { padding: 0.8rem 0.4rem; border-radius: 12px; min-height: 140px; justify-content: space-between; display: flex; flex-direction: column;}
-            .product-img-wrapper { width: 65px; height: 65px; margin: 0 auto 0.5rem; border-width: 2px; }
-            .product-name { font-size: 0.75rem; margin-bottom: 0.2rem; min-height: 2.2rem; align-items: start; }
-            .product-badge { font-size: 0.6rem; padding: 0.1rem 0.4rem; align-self: center; }
+            
+            /* ลดความสูงขั้นต่ำบนมือถือ */
+            .product-card { padding: 0.8rem 0.4rem; border-radius: 12px; min-height: auto; }
+            .product-img-wrapper { width: 65px; height: 65px; margin: 0 auto 0.4rem; border-width: 2px; }
+            .product-name { font-size: 0.75rem; margin-bottom: 0.3rem; min-height: 2rem; align-items: start; justify-content: center; }
+            
+            .card-actions { flex-direction: column; gap: 0.3rem; margin-top: 0; }
+            .action-btn { font-size: 0.65rem; padding: 0.2rem; border-radius: 4px; width: 100%; }
         }
-        
+
         @media screen and (max-width: 380px) {
             .grid { gap: 0.5rem; }
             .product-img-wrapper { width: 55px; height: 55px; }
             .product-name { font-size: 0.7rem; }
-            /* จอเล็กสุดๆ ให้ปุ่มซ้อนกันได้ถ้าจำเป็น */
-            .header-right { gap: 0.5rem; }
-            .header-link-btn { width: 100%; justify-content: center; }
         }
 
         /* --- Popup --- */
@@ -210,18 +227,6 @@
             cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
-        .cta-button {
-            display: inline-block; padding: 0.8rem 2rem; background: var(--accent-color); color: white;
-            border-radius: 50px; text-decoration: none; font-weight: 500; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s;
-        }
-        /* เพิ่ม class สำหรับปุ่มที่กดไม่ได้ */
-        .cta-button.disabled {
-            background-color: #94a3b8; /* สีเทา */
-            box-shadow: none;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
@@ -268,14 +273,12 @@
                     <button class="nav-btn next-btn" onclick="changeImage(1)">&#10095;</button>
                 </div>
                 <div id="image-counter" style="margin-bottom:1rem; font-size:0.8rem; color:#64748b;"></div>
-                <a id="popup-link" href="#" target="_blank" class="cta-button">▶ รับชมวิดีโอ</a>
             </div>
         </div>
     </div>
 
 <script>
-    const imageSuffixes = ['in', 'gf', 'pm','one']; 
-    // const defaultVideoLink = "..." // เอาลิงก์กลางออกแล้ว
+    const imageSuffixes = ['in', 'gf', 'pm', 'one']; 
 
     const products = [
         { code: 'AC', name: 'Acerola cherry plus', color: '#fff7ed', video: 'https://drive.google.com/file/d/1qa1wa0GKYQUNdNrqsmJSZgADjTBu1rPg/view?usp=drive_link' },
@@ -287,12 +290,10 @@
         { code: 'LT', name: 'Lutein & Zeaxanthin', color: '#fefce8', video: 'https://drive.google.com/file/d/1Qk9FePI0EAwtKTRYpsKyGKsKsF3fcFk2/view?usp=drive_link' },
         { code: 'MA', name: 'Magnesium plus', color: '#eff6ff', video: 'https://drive.google.com/file/d/1By6AQy_VpeuqqcEAOcLjkbIwgHkPntgf/view?usp=drive_link' },
         { code: 'MT', name: 'Multivitamin plus', color: '#f3e8ff', video: 'https://drive.google.com/file/d/18Q0cskerFQsqkcRgxcpkG0TfAHsalSLO/view?usp=drive_link'},
-        // สินค้าใหม่
-        { code: 'ZN', name: 'Zinc plus C', color: '#f3f4f6',video: 'https://drive.google.com/file/d/1igzJQs-IWpB48d-gsMrGC14tttTkMXxP/view?usp=drive_link' },
-        { code: 'Dp', name: 'Date palm plus', color: '#fae8ff',video: 'https://drive.google.com/file/d/1nxRTIS6LXUFjHE24iwaHgKCj_bAWPhsK/view?usp=drive_link' },
-        { code: 'AS', name: 'Astaxanthin plus', color: '#fee2e2',video: 'https://drive.google.com/file/d/1EKKugmjWvIj447gnK0T_8G27867jUQ9E/view?usp=drive_link' },
+        { code: 'ZN', name: 'Zinc plus C', color: '#f3f4f6', video: 'https://drive.google.com/file/d/1igzJQs-IWpB48d-gsMrGC14tttTkMXxP/view?usp=drive_link' },
+        { code: 'Dp', name: 'Date palm plus', color: '#fae8ff', video: 'https://drive.google.com/file/d/1nxRTIS6LXUFjHE24iwaHgKCj_bAWPhsK/view?usp=drive_link' },
+        { code: 'AS', name: 'Astaxanthin plus', color: '#fee2e2', video: 'https://drive.google.com/file/d/1EKKugmjWvIj447gnK0T_8G27867jUQ9E/view?usp=drive_link' },
         { code: 'COC', name: 'Colla cal plus', color: '#e0f2fe', video: 'https://drive.google.com/file/d/1LYE4ZKAYeItdTXGgsIueq9CcP-OTz9qK/view?usp=drive_link' },
-        // เพิ่มผลิตภัณฑ์ใหม่
         { code: 'GOT', name: 'Gotu kola plus', color: '#E8F5E9' } 
     ];
 
@@ -304,59 +305,62 @@
         card.className = 'product-card';
         card.style.background = `linear-gradient(to bottom right, #ffffff 60%, ${product.color} 100%)`;
 
+        // สร้าง HTML สำหรับปุ่มวิดีโอ
+        let videoBtnHtml = '';
+        if (product.video) {
+            videoBtnHtml = `<a href="${product.video}" target="_blank" class="action-btn btn-video">ดูวิดีโอ</a>`;
+        } else {
+            videoBtnHtml = `<button class="action-btn btn-video disabled">ไม่มีวิดีโอ</button>`;
+        }
+
+        // HTML โครงสร้างการ์ดสินค้า
         card.innerHTML = `
-            <div class="product-img-wrapper">
-                <img src="${coverImage}" alt="${product.name}" 
-                     onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size:1rem; color:#ccc;\\'>${product.code}</span>'">
+            <div style="cursor: pointer;" onclick="openPopup('${product.code}')">
+                <div class="product-img-wrapper">
+                    <img src="${coverImage}" alt="${product.name}" 
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size:1rem; color:#ccc;\\'>${product.code}</span>'">
+                </div>
+                <div class="product-name">${product.name}</div>
             </div>
-            <div class="product-name">${product.name}</div>
-            <div class="product-badge">${product.code}</div>
+            
+            <div class="card-actions">
+                <button class="action-btn btn-promote" onclick="openPopup('${product.code}')">ภาพ promote</button>
+                ${videoBtnHtml}
+            </div>
         `;
-        card.onclick = () => openPopup(product);
+        
         gridContainer.appendChild(card);
     });
 
     // Popup Logic
+    window.openPopup = function(productCode) {
+        const product = products.find(p => p.code === productCode);
+        if (!product) return;
+
+        currentProductCode = product.code;
+        currentImageIndex = 0;
+        currentImageList = imageSuffixes.map(suffix => `${product.code}${suffix}.jpg`);
+
+        const popupTitle = document.getElementById('popup-title');
+        popupTitle.innerText = product.name;
+        
+        updateGalleryImage();
+        const popup = document.getElementById('main-popup');
+        popup.style.display = 'flex';
+        setTimeout(() => popup.classList.add('show'), 10);
+        document.body.style.overflow = 'hidden';
+    }
+
     const popup = document.getElementById('main-popup');
     const popupImg = document.getElementById('popup-img');
     const popupPlaceholder = document.getElementById('popup-placeholder');
-    const popupTitle = document.getElementById('popup-title');
-    const popupLink = document.getElementById('popup-link');
     const counterDisplay = document.getElementById('image-counter');
     
     let currentProductCode = '';
     let currentImageIndex = 0;
     let currentImageList = [];
 
-    function openPopup(product) {
-        currentProductCode = product.code;
-        currentImageIndex = 0;
-        currentImageList = imageSuffixes.map(suffix => `${product.code}${suffix}.jpg`);
-
-        popupTitle.innerText = product.name;
-        
-        // --- ส่วนที่แก้ไข: เช็คว่ามีวิดีโอไหม ---
-        if (product.video) {
-            // ถ้ามีวิดีโอ ให้กดได้ปกติ
-            popupLink.href = product.video;
-            popupLink.innerHTML = '▶ รับชมวิดีโอ';
-            popupLink.classList.remove('disabled');
-            popupLink.style.backgroundColor = 'var(--accent-color)'; // คืนสีน้ำเงิน
-        } else {
-            // ถ้าไม่มีวิดีโอ ให้กดไม่ได้ + เปลี่ยนข้อความ
-            popupLink.removeAttribute('href'); // เอาลิงก์ออก
-            popupLink.innerHTML = '⚠️ วิดีโออยู่ระหว่างดำเนินการจัดทำ';
-            popupLink.classList.add('disabled');
-            popupLink.style.backgroundColor = '#94a3b8'; // เปลี่ยนเป็นสีเทา
-        }
-        
-        updateGalleryImage();
-        popup.style.display = 'flex';
-        setTimeout(() => popup.classList.add('show'), 10);
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closePopup() {
+    window.closePopup = function() {
         popup.classList.remove('show');
         setTimeout(() => {
             popup.style.display = 'none';
@@ -364,7 +368,7 @@
         }, 300);
     }
 
-    function changeImage(direction) {
+    window.changeImage = function(direction) {
         currentImageIndex += direction;
         if (currentImageIndex >= currentImageList.length) currentImageIndex = 0;
         else if (currentImageIndex < 0) currentImageIndex = currentImageList.length - 1;
