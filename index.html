@@ -362,7 +362,7 @@
 
         currentProductCode = product.code;
         currentImageIndex = 0;
-        currentImageList = imageSuffixes.map(suffix => `${product.code}${suffix}.jpg`);
+        currentImageList = imageSuffixes.map(suffix => `${product.code}${suffix}`);
 
         const popupTitle = document.getElementById('popup-title');
         popupTitle.innerText = product.name;
